@@ -1,0 +1,84 @@
+name: LawMode Legal Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main, master]
+
+jobs:
+  legal-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install LawMode
+        run: |
+          pip install -e .
+      
+      - name: Run LawMode Review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            lawmode scan --diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
+          else
+            lawmode scan --diff HEAD~1
+          fi
+      
+      - name: Comment PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reviewPath = '.lawmode/review.json';
+            if (fs.existsSync(reviewPath)) {
+              const review = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
+              const hasCritical = review.risks.some(r => r.severity === 'Critical');
+              
+              const comment = `## 🔍 LawMode.ai Legal Review
+              
+              **Review ID:** \`${review.review_id}\`
+              
+              Found ${review.risks.length} legal risk(s).
+              
+              ${hasCritical ? '⚠️ **This PR contains critical legal risks.**' : '✅ No critical risks found.'}
+              
+              See \`.lawmode/\` folder for complete artifacts.
+              
+              ⚠️ **NOT LEGAL ADVICE**: Automated analysis for informational purposes only.`;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+              
+              if (hasCritical) {
+                core.setFailed('Critical legal risks found');
+              }
+            }
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lawmode-artifacts
+          path: .lawmode/
+          retention-days: 30
+

@@ -1,0 +1,157 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: LawMode CLI - Scan File",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "lawmode.cli",
+            "args": [
+                "${input:filePath}",
+                "--verbose"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: LawMode CLI - Scan Directory",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "lawmode.cli",
+            "args": [
+                "${input:directoryPath}",
+                "--verbose",
+                "--json"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: LawMode CLI - Scan with Diff",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "lawmode.cli",
+            "args": [
+                "--diff",
+                "${input:gitDiff}",
+                "--verbose"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: LawMode Core Agent",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/debug_agent.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: Pytest - All Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests",
+                "-v",
+                "--tb=short"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: Pytest - Current Test File",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${file}",
+                "-v",
+                "--tb=short"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: Debug Chain Builder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/debug_chains.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        },
+        {
+            "name": "Python: Debug LLM Backend",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/debug_llm.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "${command:python.interpreterPath}"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "filePath",
+            "type": "promptString",
+            "description": "Path to file to scan",
+            "default": "examples/example_scan.py"
+        },
+        {
+            "id": "directoryPath",
+            "type": "promptString",
+            "description": "Path to directory to scan",
+            "default": "lawmode"
+        },
+        {
+            "id": "gitDiff",
+            "type": "promptString",
+            "description": "Git diff spec (e.g., HEAD~1 or commit1..commit2)",
+            "default": "HEAD~1"
+        }
+    ]
+}

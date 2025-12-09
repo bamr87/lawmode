@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  lawmode:
+    build: .
+    image: lawmode:latest
+    volumes:
+      - ./:/app
+      - lawmode-artifacts:/app/.lawmode
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - XAI_API_KEY=${XAI_API_KEY:-}
+      - GROK_API_KEY=${GROK_API_KEY:-}
+      - LAWMODE_LLM_PROVIDER=${LAWMODE_LLM_PROVIDER:-openai}
+      - LAWMODE_LLM_MODEL=${LAWMODE_LLM_MODEL:-gpt-4o}
+    command: lawmode scan /app
+    networks:
+      - lawmode-network
+
+volumes:
+  lawmode-artifacts:
+
+networks:
+  lawmode-network:
+    driver: bridge
+

@@ -1,0 +1,27 @@
+{
+  "review_id": "d6664cc2-e1ec-4f81-9dab-20542c45aad4",
+  "commit_sha": null,
+  "timestamp": "2025-12-09T04:38:13.662124",
+  "jurisdictions": [
+    "US",
+    "EU",
+    "UK"
+  ],
+  "domain": null,
+  "risks": [],
+  "history": [
+    "chain_1.json",
+    "chain_2.json",
+    "chain_3.json",
+    "chain_4.json",
+    "chain_5.json",
+    "chain_6.json",
+    "chain_7.json",
+    "chain_8.json"
+  ],
+  "signature": null,
+  "metadata": {
+    "file_path": "debug_test.py",
+    "state": null
+  }
+}

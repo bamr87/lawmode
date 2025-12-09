@@ -1,0 +1,105 @@
+{
+  "name": "lawmode",
+  "displayName": "LawMode.ai",
+  "description": "Always-on AI lawyer for developers - inline legal compliance warnings",
+  "version": "0.1.0",
+  "publisher": "lawmode",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lawmode.scan",
+        "title": "LawMode: Scan Current File"
+      },
+      {
+        "command": "lawmode.scanWorkspace",
+        "title": "LawMode: Scan Workspace"
+      },
+      {
+        "command": "lawmode.showRisks",
+        "title": "LawMode: Show Risks"
+      }
+    ],
+    "configuration": {
+      "title": "LawMode",
+      "properties": {
+        "lawmode.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable LawMode legal compliance checking"
+        },
+        "lawmode.jurisdictions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["US", "EU"],
+          "description": "Jurisdictions to check for compliance"
+        },
+        "lawmode.severityLevel": {
+          "type": "string",
+          "enum": ["all", "critical", "high", "medium"],
+          "default": "all",
+          "description": "Minimum severity level to display"
+        },
+        "lawmode.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "LLM API key (OpenAI or xAI Grok)"
+        },
+        "lawmode.llmProvider": {
+          "type": "string",
+          "enum": ["openai", "grok"],
+          "default": "openai",
+          "description": "LLM provider to use"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "python",
+        "extensions": [".py"]
+      },
+      {
+        "id": "javascript",
+        "extensions": [".js", ".jsx"]
+      },
+      {
+        "id": "typescript",
+        "extensions": [".ts", ".tsx"]
+      },
+      {
+        "id": "java",
+        "extensions": [".java"]
+      },
+      {
+        "id": "go",
+        "extensions": [".go"]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
+

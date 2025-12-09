@@ -1,0 +1,29 @@
+# LawMode Policy Configuration
+
+policy:
+  # Jurisdictions to check
+  jurisdictions:
+    - US
+    - EU
+    - UK
+  
+  # Severity-based gating rules
+  severity_gating:
+    critical: block          # Block merge
+    high: require_approval   # Require approval from @legal team
+    medium: comment          # Comment only
+    low: comment             # Comment only
+  
+  # Industry domains (auto-detected, but can be overridden)
+  domains: []
+  
+  # Enable automatic fixes (experimental)
+  auto_fix_enabled: false
+
+# LLM Configuration (can be overridden via environment variables)
+llm:
+  provider: openai          # openai, grok
+  model: gpt-4o            # Model name
+  temperature: 0.1         # Lower = more deterministic
+  max_tokens: 4000
+
