@@ -35,9 +35,9 @@ jobs:
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            lawmode scan --diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
+            lawmode --diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
           else
-            lawmode scan --diff HEAD~1
+            lawmode --diff HEAD~1
           fi
       
       - name: Comment PR
