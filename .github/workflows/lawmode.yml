@@ -34,6 +34,13 @@ jobs:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
         run: |
+          # Graceful skip when no LLM credentials are provisioned — the review
+          # is additive; a missing key should not fail every PR. Provision
+          # OPENAI_API_KEY (or XAI/GROK) as a repo secret to enable it.
+          if [ -z "${OPENAI_API_KEY}" ] && [ -z "${XAI_API_KEY}" ] && [ -z "${GROK_API_KEY}" ]; then
+            echo "::notice::LawMode review skipped — no LLM API key secret provisioned (OPENAI_API_KEY / XAI_API_KEY / GROK_API_KEY)."
+            exit 0
+          fi
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             lawmode --diff ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
           else
