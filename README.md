@@ -1,5 +1,9 @@
 # LawMode.ai
 
+> Always-on AI legal reviewer for developers: checks code, prompts and commits, and gates non-compliant PRs.
+
+[![CI](https://github.com/bamr87/lawmode/actions/workflows/ci.yml/badge.svg)](https://github.com/bamr87/lawmode/actions/workflows/ci.yml) [![License](https://img.shields.io/github/license/bamr87/lawmode)](LICENSE)
+
 The world's first always-on AI lawyer that lives inside the developer workflow.
 
 ## Overview
@@ -135,3 +139,19 @@ See [PRD.md](./PRD.md) for complete product requirements and architecture detail
 
 **NOT LEGAL ADVICE**: LawMode.ai provides automated legal compliance analysis for informational purposes only. It does not constitute legal advice, and you should consult with qualified legal counsel for legal matters.
 
+## Contributing
+
+Contributions are welcome via pull request. Use [Conventional Commits](https://www.conventionalcommits.org/) and keep the CI checks green. The fleet-wide workflow is described in the hub's [CONTRIBUTING.md](https://github.com/bamr87/bamr87/blob/main/CONTRIBUTING.md). AI agents should start with [CLAUDE.md](CLAUDE.md).
+
+## Changelog
+
+Notable changes are recorded in [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Released under the [MIT License](LICENSE).
+
+---
+
+<!-- bamr87-portfolio-footer -->
+<sub>Part of the [bamr87 portfolio](https://github.com/bamr87) — browse every project on [Amr's GitHub profile](https://github.com/bamr87).</sub>
